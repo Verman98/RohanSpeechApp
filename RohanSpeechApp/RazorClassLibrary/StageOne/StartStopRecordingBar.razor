@@ -1,29 +1,53 @@
 ﻿@using MudBlazor;
+@inject ISnackbar Snackbar;
 
-<MudGrid Justify="Justify.Center" Spacing="3">
+@*<MudGrid Justify="Justify.Center" Spacing="3">
 
-    <MudItem md="6" lg="6" sm="6" xs="6">
-
-        <MudPaper Color="Color.Success">
+    <MudItem md="6" lg="6" sm="6" xs="12">
 
         
-        <MudButton Class="mud-width-full" Style="height:200px;" Color="Color.Success" Icon="@Icons.Material.Filled.Start">
+        <MudIconButton Class="mud-width-full" Style="height:200px;" Color="Color.Success" Variant="Variant.Filled"
+                       Icon="@Icons.Material.Filled.PlayArrow" Size="Size.Large">
+           
+        </MudIconButton>
+   </MudItem>
 
-        </MudButton>
-        </MudPaper>
-    </MudItem>
+    <MudItem md="6" lg="6" sm="6" xs="12">*@
 
-    <MudItem md="6" lg="6" sm="6" xs="6">
+@if (started)
+{
 
-        <MudButton Class="mud-width-full" Style="height:200px;" Color="Color.Error" Icon="@Icons.Material.Filled.Stop">
+    <MudIconButton Class="mud-width-full rounded" Style="height:300px;width:500px;margin-top: 350px;" Color="Color.Error" Variant="Variant.Filled"
+                    Icon="@Icons.Material.Filled.Stop" Size="Size.Large" OnClick=@StartStopBtnClicked>
 
-        </MudButton>
+    </MudIconButton>
 
-    </MudItem>
+} else
+{
 
-</MudGrid>
+    <MudIconButton Class="mud-width-full rounded" Style="height:300px;width:500px;margin-top: 350px;" Color="Color.Success" Variant="Variant.Filled"
+               Icon="@Icons.Material.Filled.PlayArrow" Size="Size.Large" OnClick=@StartStopBtnClicked
+              
+                >
+
+    </MudIconButton>
+
+}
+
+
+
+ @*   </MudItem>
+
+</MudGrid>*@
 
 
 @code {
+    private bool started = false;
 
+    private void StartStopBtnClicked()
+    {
+        started = !started;
+        Console.WriteLine(started);
+        StateHasChanged();
+    }
 }

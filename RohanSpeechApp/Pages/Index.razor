@@ -3,8 +3,35 @@
 @using MudBlazor
 @using RohanSpeechApp.RazorClassLibrary.Stages
 
+@inject ISnackbar Snackbar
 
 <PageTitle>Index</PageTitle>
 
-<StageOne></StageOne>
 
+<MudTabs Class="mud-width-full" Rounded="true" Centered="true" PanalClass="ma-6" >
+
+    <MudTabPanel Text="Level one" ToolTip="Stage one">
+        <StageOne></StageOne>
+    </MudTabPanel>
+
+    <MudTabPanel Text="Level two" ToolTip="Stage one" Disabled="true" @onclick=@DisplayDisabledError 
+        Icon=@Icons.Material.Filled.Lock>
+    </MudTabPanel>
+
+    <MudTabPanel Text="Level three" ToolTip="Stage one" Disabled="true" Icon=@Icons.Material.Filled.Lock>
+    </MudTabPanel>
+
+</MudTabs>
+
+
+@code{
+
+
+    private void DisplayDisabledError()
+    {
+        Snackbar.Add("Hi", Severity.Warning);
+        Console.WriteLine("Hi");
+    }
+
+    
+}
