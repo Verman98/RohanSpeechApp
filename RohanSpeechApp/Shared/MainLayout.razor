@@ -1,0 +1,22 @@
+﻿@using MudBlazor
+@inherits LayoutComponentBase
+
+<PageTitle>RohanSpeechApp</PageTitle>
+
+<div class="page">
+
+    <MudThemeProvider Theme="_theme"/>
+    <MudDialogProvider/>
+    <MudSnackbarProvider/>
+
+    <main>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+    private MudTheme _theme = new();
+}
