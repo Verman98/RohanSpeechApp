@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Mvc;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Latest);
+
 
 builder.Services.AddMudServices();
 
@@ -26,7 +29,16 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseMvcWithDefaultRoute();
+
+
 app.MapBlazorHub();
+
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 app.MapFallbackToPage("/_Host");
 
 app.Run();

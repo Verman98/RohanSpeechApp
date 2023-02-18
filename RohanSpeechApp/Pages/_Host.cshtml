@@ -34,5 +34,86 @@
     <script src="_framework/blazor.server.js"></script>
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
 
+    <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+
+
+    <script>
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+
+        let audioCtx;
+
+    
+
+        window.MyJSMethods = {
+
+            startRecording: function () {
+                navigator.getUserMedia({ audio: true }, onSuccess, onError);
+            },
+
+            stopRecording: function (element) {
+                stop.click();
+            },
+
+
+        };
+
+
+        let onError = function (err) {
+            console.log('The following error occured: ' + err);
+        };
+
+
+        let stop = document.querySelector('.stop');
+
+        let onSuccess = function (stream) {
+            let recorder;
+            let context;
+            let audio = document.querySelector('audio');
+
+            context = new AudioContext();
+            let mediaStreamSource = context.createMediaStreamSource(stream);
+            recorder = new Recorder(mediaStreamSource);
+            recorder.record();
+
+
+            stop.onclick = function () {
+                recorder.stop();
+
+                recorder.exportWAV(function (s) {
+                    wav = window.URL.createObjectURL(s);
+                    audio.src = window.URL.createObjectURL(s);
+                    let filename = new Date().toISOString().replaceAll(':', "");
+                    let fd = new FormData();
+                    fd.append("file", s, filename);
+                    let xhr = new XMLHttpRequest();
+                    xhr.addEventListener("load", transferComplete);
+                    xhr.addEventListener("error", transferFailed)
+                    xhr.addEventListener("abort", transferFailed)
+                    xhr.open("POST", "api/SaveAudio/Save/", true);
+                    xhr.send(fd);
+
+                });
+
+                function transferComplete(evt) {
+                    console.log("The transfer is complete.");
+                    //GLOBAL.DotNetReference.invokeMethodAsync('Recognize', filename);
+
+                }
+
+                function transferFailed(evt) {
+                    console.log("An error occurred while transferring the file.");
+
+                    console.log(evt.responseText);
+                    console.log(evt.status);
+                }
+
+            }
+        }
+
+
+    </script>
+
 </body>
 </html>
