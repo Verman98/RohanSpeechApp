@@ -44,20 +44,71 @@
 
         let audioCtx;
 
-    
+        let recorder;
+        let context;
+        let filename = "Filename";
 
-        window.MyJSMethods = {
+        function startRecording(text) {
+            filename = text;
+            navigator.getUserMedia({ audio: true }, onSuccess, onError);
+        }
 
-            startRecording: function () {
-                navigator.getUserMedia({ audio: true }, onSuccess, onError);
-            },
+        function stopRecording(element) {
+            //stop.click();
+            recorder.stop();
 
-            stopRecording: function (element) {
-                stop.click();
-            },
+            recorder.exportWAV(function (s) {
+                //let filename = new Date().toISOString().replaceAll(':', "");
+                let fd = new FormData();
+                fd.append("file", s, filename);
+                let xhr = new XMLHttpRequest();
+                xhr.addEventListener("load", transferComplete);
+                xhr.addEventListener("error", transferFailed)
+                xhr.addEventListener("abort", transferFailed)
+                xhr.open("POST", "api/SaveAudio/Save/", true);
+                xhr.send(fd);
+            });
+        }
+
+        function transferComplete(evt) {
+            console.log("The transfer is complete.");
+            //GLOBAL.DotNetReference.invokeMethodAsync('Recognize', filename);
+
+        }
+
+        function transferFailed(evt) {
+            console.log("An error occurred while transferring the file.");
+
+            console.log(evt.responseText);
+            console.log(evt.status);
+        }
+
+        //window.MyJSMethods = {
+
+        //    startRecording: function () {
+        //        navigator.getUserMedia({ audio: true }, onSuccess, onError);
+        //    },
+
+        //    stopRecording: function (element) {
+        //        //stop.click();
+        //        recorder.stop();
+
+        //        recorder.exportWAV(function (s) {
+        //            wav = window.URL.createObjectURL(s);
+        //            audio.src = window.URL.createObjectURL(s);
+        //            let filename = new Date().toISOString().replaceAll(':', "");
+        //            let fd = new FormData();
+        //            fd.append("file", s, filename);
+        //            let xhr = new XMLHttpRequest();
+        //            xhr.addEventListener("load", transferComplete);
+        //            xhr.addEventListener("error", transferFailed)
+        //            xhr.addEventListener("abort", transferFailed)
+        //            xhr.open("POST", "api/SaveAudio/Save/", true);
+        //            xhr.send(fd);
+        //    },
 
 
-        };
+        //};
 
 
         let onError = function (err) {
@@ -68,9 +119,9 @@
         let stop = document.querySelector('.stop');
 
         let onSuccess = function (stream) {
-            let recorder;
-            let context;
-            let audio = document.querySelector('audio');
+            //let recorder;
+            //let context;
+            //let audio = document.querySelector('audio');
 
             context = new AudioContext();
             let mediaStreamSource = context.createMediaStreamSource(stream);
@@ -78,38 +129,38 @@
             recorder.record();
 
 
-            stop.onclick = function () {
-                recorder.stop();
+            //stop.onclick = function () {
+            //    recorder.stop();
 
-                recorder.exportWAV(function (s) {
-                    wav = window.URL.createObjectURL(s);
-                    audio.src = window.URL.createObjectURL(s);
-                    let filename = new Date().toISOString().replaceAll(':', "");
-                    let fd = new FormData();
-                    fd.append("file", s, filename);
-                    let xhr = new XMLHttpRequest();
-                    xhr.addEventListener("load", transferComplete);
-                    xhr.addEventListener("error", transferFailed)
-                    xhr.addEventListener("abort", transferFailed)
-                    xhr.open("POST", "api/SaveAudio/Save/", true);
-                    xhr.send(fd);
+            //    recorder.exportWAV(function (s) {
+            //        wav = window.URL.createObjectURL(s);
+            //        audio.src = window.URL.createObjectURL(s);
+            //        let filename = new Date().toISOString().replaceAll(':', "");
+            //        let fd = new FormData();
+            //        fd.append("file", s, filename);
+            //        let xhr = new XMLHttpRequest();
+            //        xhr.addEventListener("load", transferComplete);
+            //        xhr.addEventListener("error", transferFailed)
+            //        xhr.addEventListener("abort", transferFailed)
+            //        xhr.open("POST", "api/SaveAudio/Save/", true);
+            //        xhr.send(fd);
 
-                });
+            //    });
 
-                function transferComplete(evt) {
-                    console.log("The transfer is complete.");
-                    //GLOBAL.DotNetReference.invokeMethodAsync('Recognize', filename);
+            //    function transferComplete(evt) {
+            //        console.log("The transfer is complete.");
+            //        //GLOBAL.DotNetReference.invokeMethodAsync('Recognize', filename);
 
-                }
+            //    }
 
-                function transferFailed(evt) {
-                    console.log("An error occurred while transferring the file.");
+            //    function transferFailed(evt) {
+            //        console.log("An error occurred while transferring the file.");
 
-                    console.log(evt.responseText);
-                    console.log(evt.status);
-                }
+            //        console.log(evt.responseText);
+            //        console.log(evt.status);
+            //    }
 
-            }
+            //}
         }
 
 

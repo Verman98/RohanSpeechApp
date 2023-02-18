@@ -1,15 +1,25 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 using MudBlazor.Services;
+using RohanSpeechApp.Interfaces;
+using RohanSpeechApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Latest);
+builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
 
+var currentDirectory = Environment.CurrentDirectory;
+Console.WriteLine($"Current Directory: {currentDirectory}");
+IFileProvider physicalFileProvider = new PhysicalFileProvider(currentDirectory);
+
+builder.Services.AddSingleton<IFileProvider>(physicalFileProvider);
+builder.Services.AddTransient<IVolumesRepository, VolumesRepository>();
+builder.Services.AddSingleton<ISpeechSamplesProvider, SpeechSamplesProvider>(); 
 
 builder.Services.AddMudServices();
 

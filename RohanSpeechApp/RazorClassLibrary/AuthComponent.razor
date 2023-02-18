@@ -1,0 +1,159 @@
+﻿@using MudBlazor;
+
+
+<MudToolBar>
+
+    <MudSpacer></MudSpacer>
+
+    <MudItem xs="4" md="4" lg="4" sm="4">
+        <MudTextField Value=@PIN Variant="Variant.Outlined" Class="mb-5"></MudTextField>
+
+    </MudItem>
+
+    <MudSpacer></MudSpacer>
+
+</MudToolBar>
+
+
+<MudGrid Justify="Justify.Center">
+
+    <MudItem xs="4" md="4" lg="4" sm="4" >
+        <MudButton Style="height:100px; width:100px" Variant="Variant.Filled" Color="Color.Primary"
+        OnClick=OneClicked>
+            1
+        </MudButton>
+    </MudItem>
+
+    <MudItem xs="4" md="4" lg="4" sm="4">
+        <MudButton Style="height:100px; width:100px" Variant="Variant.Filled" Color="Color.Primary"
+                   OnClick=TwoClicked>
+            2
+        </MudButton>
+    </MudItem>
+
+    <MudItem xs="4" md="4" lg="4" sm="4">
+        <MudButton Style="height:100px; width:100px" Variant="Variant.Filled" Color="Color.Primary"
+                   OnClick=ThreeClicked>
+            3
+        </MudButton>
+    </MudItem>
+
+    <MudItem xs="4" md="4" lg="4" sm="4">
+        <MudButton Style="height:100px; width:100px" Variant="Variant.Filled" Color="Color.Primary"
+                   OnClick=FourClicked>
+            4
+        </MudButton>
+    </MudItem>
+
+    <MudItem xs="4" md="4" lg="4" sm="4">
+        <MudButton Style="height:100px; width:100px" Variant="Variant.Filled" Color="Color.Primary"
+                   OnClick=FiveClicked>
+            5
+        </MudButton>
+    </MudItem>
+
+    <MudItem xs="4" md="4" lg="4" sm="4">
+        <MudButton Style="height:100px; width:100px" Variant="Variant.Filled" Color="Color.Primary"
+                   OnClick=SixClicked>
+            6
+        </MudButton>
+    </MudItem>
+
+    <MudItem xs="4" md="4" lg="4" sm="4">
+        <MudButton Style="height:100px; width:100px" Variant="Variant.Filled" Color="Color.Primary"
+                   OnClick=SevenClicked>
+            7
+        </MudButton>
+    </MudItem>
+
+    <MudItem xs="4" md="4" lg="4" sm="4" >
+            <MudButton Style="height:100px; width:100px" Variant="Variant.Filled" Color="Color.Primary"
+            OnClick=EightClicked>
+                8
+            </MudButton>
+        </MudItem>
+
+    <MudItem xs="4" md="4" lg="4" sm="4" >
+        <MudButton Style="height:100px; width:100px" Variant="Variant.Filled" Color="Color.Primary"
+        OnClick=NineClicked>
+            9
+        </MudButton>
+    </MudItem>
+
+    <MudItem xs="4" md="4" lg="4" sm="4">
+        <MudIconButton Style="height:100px; width:100px" Variant="Variant.Filled" Color="Color.Primary"
+                   OnClick=DeleteClicked Icon=@Icons.Material.Filled.Delete>
+            
+        </MudIconButton>
+    </MudItem>
+
+    <MudItem xs="4" md="4" lg="4" sm="4">
+        <MudButton Style="height:100px; width:100px" Variant="Variant.Filled" Color="Color.Primary"
+                   OnClick=ZeroClicked>
+            0
+        </MudButton>
+    </MudItem>
+
+    <MudItem xs="4" md="4" lg="4" sm="4">
+        <MudIconButton Style="height:100px; width:100px" Variant="Variant.Filled" Color="Color.Primary"
+                       OnClick=DeleteClicked Icon=@Icons.Material.Filled.Verified>
+
+        </MudIconButton>
+    </MudItem>
+
+</MudGrid>
+
+@code {
+    [Parameter]
+    public string AuthPIN { get; set; } = "1111";
+
+    [Parameter]
+    public EventCallback Authenticated { get; set; }
+
+
+    private string PIN = "";
+
+    private async Task AddNr(int nr)
+    {
+
+        PIN = PIN + nr;
+
+        if(AuthPIN == PIN)
+        {
+            await Authenticated.InvokeAsync();
+        }
+
+    }
+
+    private async Task OneClicked() => await AddNr(1);
+
+    private async Task TwoClicked() => await AddNr(2);
+
+    private async Task ThreeClicked() => await AddNr(3);
+
+    private async Task FourClicked() => await AddNr(4);
+
+    private async Task FiveClicked() => await AddNr(5);
+
+    private async Task SixClicked() { await AddNr(6); }
+
+    private async Task SevenClicked() => await AddNr(7);
+
+    private async Task EightClicked() => await AddNr(8);
+
+    private async Task NineClicked() => await AddNr(9);
+
+    private async Task ZeroClicked() => await AddNr(0);
+
+    private void DeleteClicked()
+    { 
+        if(PIN.Length > 0)
+        {
+            PIN = PIN.Remove(PIN.Length-1); 
+        }
+        
+    
+    }
+
+
+}

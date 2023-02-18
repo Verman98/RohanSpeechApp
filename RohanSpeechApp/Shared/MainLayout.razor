@@ -14,11 +14,21 @@
 
     <MudLayout>
         
-        <AppBar></AppBar>
+        @if (authorized)
+        {
+            <AppBar></AppBar>
 
-        <MudMainContent Class="mt-16 pa-5">
-            @Body
-        </MudMainContent>
+            <MudMainContent Class="mt-16 pa-5">
+                @Body
+            </MudMainContent>
+
+        } else
+        {
+            <MudMainContent Class="mt-16 pa-5">
+                <AuthComponent Authenticated=@Authenticated AuthPIN="1234"></AuthComponent>
+            </MudMainContent>
+        }
+
 
     </MudLayout>
 
@@ -26,4 +36,12 @@
 
 @code {
     private MudTheme _theme = new();
+
+    private bool authorized = false;
+
+    private void Authenticated()
+    {
+        authorized = true;
+        StateHasChanged();
+    }
 }

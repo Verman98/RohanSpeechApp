@@ -1,10 +1,11 @@
 ﻿@using MudBlazor
+@using RohanSpeechApp.Interfaces;
 @using RohanSpeechApp.RazorClassLibrary.StageOne
 
+@inject IJSRuntime jsRuntime;
+@inject ISpeechSamplesProvider speechSamplesProvider;
+
 <div class="mt-10">
-    @*<MudItem lg="2" md="2">
-        <MudIcon Icon="@Icons.Material.Filled.KeyboardVoice" Size="Size.Small"></MudIcon>
-    </MudItem>*@
 
     <MudToolBar >
 
@@ -29,7 +30,7 @@
 
         <MudSpacer></MudSpacer>
 
-        <StartStopRecordingBar></StartStopRecordingBar>
+        <StartStopRecordingBar RecordingStartedStopped=@RecordingStartedStoppedAsync></StartStopRecordingBar>
         <MudSpacer></MudSpacer>
     </MudToolBar>
     
@@ -37,5 +38,36 @@
 
 
 @code {
-    public string TextValue { get; set; } = "Hello, this is a random text you should say";
+
+    protected override void OnInitialized()
+    {
+        TextValue = speechSamplesProvider.GetRandomSample();
+    }
+
+    public string TextValue { get; set; } = "Hello this is a random text you should say";
+
+    private async Task RecordingStartedStoppedAsync(bool started)
+    {
+        if (started)
+        {
+            await Record();
+
+        } else
+        {
+            await Stop();
+
+            TextValue = speechSamplesProvider.GetRandomSample();
+        }
+    }
+
+
+    private async Task Record()
+    {
+        await jsRuntime.InvokeVoidAsync("startRecording", TextValue);
+    }
+
+    private async Task Stop()
+    {
+        await jsRuntime.InvokeVoidAsync("stopRecording");
+    }
 }

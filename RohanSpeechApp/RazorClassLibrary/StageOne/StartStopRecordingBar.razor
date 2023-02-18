@@ -1,24 +1,10 @@
 ﻿@using MudBlazor;
-@inject ISnackbar Snackbar;
-@inject IJSRuntime jsRuntime;
 
-@*<MudGrid Justify="Justify.Center" Spacing="3">
-
-    <MudItem md="6" lg="6" sm="6" xs="12">
-
-        
-        <MudIconButton Class="mud-width-full" Style="height:200px;" Color="Color.Success" Variant="Variant.Filled"
-                       Icon="@Icons.Material.Filled.PlayArrow" Size="Size.Large">
-           
-        </MudIconButton>
-   </MudItem>
-
-    <MudItem md="6" lg="6" sm="6" xs="12">*@
 
 @if (started)
 {
 
-    <MudIconButton Class="mud-width-full rounded stop" Style="height:300px;width:500px;margin-top: 350px;" Color="Color.Error" Variant="Variant.Filled"
+    <MudIconButton Class="mud-width-full rounded" Style="height:300px;width:500px;margin-top: 350px;" Color="Color.Error" Variant="Variant.Filled"
                     Icon="@Icons.Material.Filled.Stop" Size="Size.Large" OnClick=@StartStopBtnClicked>
 
     </MudIconButton>
@@ -26,7 +12,7 @@
 } else
 {
 
-    <MudIconButton Class="mud-width-full rounded stop" Style="height:300px;width:500px;margin-top: 350px;" Color="Color.Success" Variant="Variant.Filled"
+    <MudIconButton Class="mud-width-full rounded" Style="height:300px;width:500px;margin-top: 350px;" Color="Color.Success" Variant="Variant.Filled"
                Icon="@Icons.Material.Filled.PlayArrow" Size="Size.Large" OnClick=@StartStopBtnClicked
               
                 >
@@ -35,42 +21,22 @@
 
 }
 
-    <audio controls autoplay>
-    </audio>
-
- @*   </MudItem>
-
-</MudGrid>*@
-
 
 @code {
     private bool started = false;
+
+
+    [Parameter]
+    public EventCallback<bool> RecordingStartedStopped { get; set; }
 
     private async void StartStopBtnClicked()
     {
         started = !started;
 
-        if (started)
-        {
-            await Record();
-        
-        } else
-        {
-            await Stop();
-        }
+        await RecordingStartedStopped.InvokeAsync(started);
 
         StateHasChanged();
     }
 
 
-
-    private async Task Record()
-    {
-        await jsRuntime.InvokeVoidAsync("MyJSMethods.startRecording");
-    }
-
-    private async Task Stop()
-    {
-        await jsRuntime.InvokeVoidAsync("MyJSMethods.stopRecording");
-    }
 }

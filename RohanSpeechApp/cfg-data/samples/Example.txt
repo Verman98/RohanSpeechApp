@@ -1,0 +1,13 @@
+﻿Yes
+No
+Hello
+Bye
+Good
+Bad
+Start
+Stop
+How are you
+I am fine
+Me
+What is this
+
