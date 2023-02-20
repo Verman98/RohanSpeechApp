@@ -1,9 +1,15 @@
-﻿@using MudBlazor
+﻿@using MudBlazor;
 @using RohanSpeechApp.Interfaces;
+@using RohanSpeechApp.Models;
 @using RohanSpeechApp.RazorClassLibrary.StageOne
 
+@implements IDisposable;
 @inject IJSRuntime jsRuntime;
 @inject ISpeechSamplesProvider speechSamplesProvider;
+
+@inject IGameService gameService;
+@inject ISnackbar snackbar;
+
 
 <div class="mt-10">
 
@@ -11,7 +17,11 @@
 
         <MudSpacer></MudSpacer>
 
-        <MudIcon Icon="@Icons.Material.Filled.KeyboardVoice" Style="height:100px; width:100px;" ></MudIcon>
+        <div style="display: grid;">
+            <canvas id="canvas" class="visualizer" height="100" width="500" style="grid-area: 1/1;"></canvas>
+
+            <MudIcon Icon="@Icons.Material.Filled.KeyboardVoice" Style="height:100px; margin-left: 200px; width:100px;grid-area: 1/1;"></MudIcon>
+        </div>
 
         <MudSpacer></MudSpacer>
     </MudToolBar>
@@ -42,7 +52,17 @@
     protected override void OnInitialized()
     {
         TextValue = speechSamplesProvider.GetRandomSample();
+
+        gameService.LevelUpEventHandler += levelUp;
+
     }
+
+    void IDisposable.Dispose()
+    {
+        gameService.LevelUpEventHandler -= levelUp;
+    }
+
+
 
     public string TextValue { get; set; } = "Hello this is a random text you should say";
 
@@ -57,6 +77,8 @@
             await Stop();
 
             TextValue = speechSamplesProvider.GetRandomSample();
+
+            await gameService.AddXP();
         }
     }
 
@@ -69,5 +91,19 @@
     private async Task Stop()
     {
         await jsRuntime.InvokeVoidAsync("stopRecording");
+    }
+
+
+
+    private async void levelUp(object? sender, GameData gameData)
+    {
+        snackbar.Add("You leveled up! Great! Keep going", Severity.Success);
+
+        await jsRuntime.InvokeVoidAsync("startAchievmentAnimation");
+        await Task.Delay(2000);
+        await jsRuntime.InvokeVoidAsync("stopAchievmentAnimation");
+
+        snackbar.Clear();
+
     }
 }

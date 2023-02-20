@@ -20,6 +20,7 @@ IFileProvider physicalFileProvider = new PhysicalFileProvider(currentDirectory);
 builder.Services.AddSingleton<IFileProvider>(physicalFileProvider);
 builder.Services.AddTransient<IVolumesRepository, VolumesRepository>();
 builder.Services.AddSingleton<ISpeechSamplesProvider, SpeechSamplesProvider>(); 
+builder.Services.AddSingleton<IGameService, GameService>();
 
 builder.Services.AddMudServices();
 

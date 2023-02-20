@@ -36,6 +36,7 @@
 
     <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
 
+    <script src="confetti.js"></script>
 
     <script>
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -48,14 +49,112 @@
         let context;
         let filename = "Filename";
 
+        var stopDrawing =false;
+        // This function visualizes the audio stream coming out of the user's microphone.
+        // Credit: Soledad Penades of https://soledadpenades.com/ via https://mdn.github.io/web-dictaphone/
+        function visualize(stream, canvas, canvasCtx) {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+            }
+
+            const source = audioCtx.createMediaStreamSource(stream);
+
+            const analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 2048;
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+
+            source.connect(analyser);
+            //analyser.connect(audioCtx.destination);
+
+            if (stopDrawing) {
+                canvasCtx.fillStyle = 'rgb(255, 255, 255)';
+                canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+                return;
+            }
+
+            draw()
+
+            if (stopDrawing)
+            {
+                canvasCtx.fillStyle = 'rgb(255, 255, 255)';
+                canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+                return;
+            }
+
+            function draw() {
+                const WIDTH = canvas.width
+                const HEIGHT = canvas.height;
+
+                if (stopDrawing) {
+                    canvasCtx.fillStyle = 'rgb(255, 255, 255)';
+                    canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+                    return;
+                }
+
+                requestAnimationFrame(draw);
+
+                analyser.getByteTimeDomainData(dataArray);
+
+                canvasCtx.fillStyle = 'rgb(255, 255, 255)';
+                canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+
+                canvasCtx.lineWidth = 2;
+                canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
+
+                canvasCtx.beginPath();
+
+                let sliceWidth = WIDTH * 1.0 / bufferLength;
+                let x = 0;
+
+                if (stopDrawing)
+                {
+                    canvasCtx.fillStyle = 'rgb(255, 255, 255)';
+                    canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+                    return;
+                }
+
+
+                for (let i = 0; i < bufferLength; i++) {
+                    console.error(bufferLength)
+                    let v = dataArray[i] / 128.0;
+                    let y = v * HEIGHT / 2;
+
+                    if (i === 0) {
+                        canvasCtx.moveTo(x, y);
+                    } else {
+                        canvasCtx.lineTo(x, y);
+                    }
+
+                    x += sliceWidth;
+
+                    if (stopDrawing)
+                    {
+                        canvasCtx.fillStyle = 'rgb(255, 255, 255)';
+                        canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+                        return;
+                    }
+                }
+
+                canvasCtx.lineTo(canvas.width, canvas.height / 2);
+                canvasCtx.stroke();
+
+            }
+        }
+
+        
+
         function startRecording(text) {
             filename = text;
+            stopDrawing = false;
+
             navigator.getUserMedia({ audio: true }, onSuccess, onError);
         }
 
         function stopRecording(element) {
             //stop.click();
             recorder.stop();
+            stopDrawing = true;
 
             recorder.exportWAV(function (s) {
                 //let filename = new Date().toISOString().replaceAll(':', "");
@@ -128,39 +227,21 @@
             recorder = new Recorder(mediaStreamSource);
             recorder.record();
 
+            const canvas = document.querySelector('.visualizer');
+            const canvasCtx = canvas.getContext("2d");
 
-            //stop.onclick = function () {
-            //    recorder.stop();
+            visualize(stream, canvas, canvasCtx);
+        }
 
-            //    recorder.exportWAV(function (s) {
-            //        wav = window.URL.createObjectURL(s);
-            //        audio.src = window.URL.createObjectURL(s);
-            //        let filename = new Date().toISOString().replaceAll(':', "");
-            //        let fd = new FormData();
-            //        fd.append("file", s, filename);
-            //        let xhr = new XMLHttpRequest();
-            //        xhr.addEventListener("load", transferComplete);
-            //        xhr.addEventListener("error", transferFailed)
-            //        xhr.addEventListener("abort", transferFailed)
-            //        xhr.open("POST", "api/SaveAudio/Save/", true);
-            //        xhr.send(fd);
 
-            //    });
+        function startAchievmentAnimation(){
 
-            //    function transferComplete(evt) {
-            //        console.log("The transfer is complete.");
-            //        //GLOBAL.DotNetReference.invokeMethodAsync('Recognize', filename);
+            startConfetti();
+        }
 
-            //    }
-
-            //    function transferFailed(evt) {
-            //        console.log("An error occurred while transferring the file.");
-
-            //        console.log(evt.responseText);
-            //        console.log(evt.status);
-            //    }
-
-            //}
+        function stopAchievmentAnimation(){
+            stopConfetti();
+            removeConfetti();
         }
 
 

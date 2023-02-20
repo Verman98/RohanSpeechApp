@@ -38,6 +38,12 @@ namespace RohanSpeechApp.Services
             // Read the file and display it line by line.  
             foreach (string line in File.ReadLines(filePath))
             {
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+
+                }
+
                 samples.Add(line);
                 Console.WriteLine(line);
             }

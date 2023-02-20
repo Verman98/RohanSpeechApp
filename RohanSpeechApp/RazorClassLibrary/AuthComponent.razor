@@ -6,7 +6,7 @@
     <MudSpacer></MudSpacer>
 
     <MudItem xs="4" md="4" lg="4" sm="4">
-        <MudTextField Value=@PIN Variant="Variant.Outlined" Class="mb-5"></MudTextField>
+        <MudTextField Value=@PIN Variant="Variant.Outlined" Class="mb-5" Style="width:100px;"></MudTextField>
 
     </MudItem>
 
@@ -82,7 +82,7 @@
 
     <MudItem xs="4" md="4" lg="4" sm="4">
         <MudIconButton Style="height:100px; width:100px" Variant="Variant.Filled" Color="Color.Primary"
-                   OnClick=DeleteClicked Icon=@Icons.Material.Filled.Delete>
+                   OnClick=DeleteClicked Icon=@Icons.Material.Filled.Backspace>
             
         </MudIconButton>
     </MudItem>
@@ -96,7 +96,8 @@
 
     <MudItem xs="4" md="4" lg="4" sm="4">
         <MudIconButton Style="height:100px; width:100px" Variant="Variant.Filled" Color="Color.Primary"
-                       OnClick=DeleteClicked Icon=@Icons.Material.Filled.Verified>
+        Disabled="true"               
+        OnClick=DeleteClicked Icon=@Icons.Material.Filled.Done>
 
         </MudIconButton>
     </MudItem>
