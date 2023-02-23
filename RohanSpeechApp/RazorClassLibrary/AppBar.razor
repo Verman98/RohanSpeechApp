@@ -43,13 +43,13 @@
     }
 
 
-    private void xpChanged(object? sender, GameData gameData)
+    private async void xpChanged(object? sender, GameData gameData)
     {
         Level = gameData.Level;
         XPPercantage = (int)gameService.GetXPPercentage();
 
 
-        InvokeAsync(() => this.StateHasChanged());
+        await InvokeAsync(() => this.StateHasChanged());
     }
 
 }

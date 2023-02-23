@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 using MudBlazor.Services;
@@ -21,10 +22,18 @@ builder.Services.AddSingleton<IFileProvider>(physicalFileProvider);
 builder.Services.AddTransient<IVolumesRepository, VolumesRepository>();
 builder.Services.AddSingleton<ISpeechSamplesProvider, SpeechSamplesProvider>(); 
 builder.Services.AddSingleton<IGameService, GameService>();
+builder.Services.AddScoped<IAuthenticationService, AuthentificationService>();
+
 
 builder.Services.AddMudServices();
 
 var app = builder.Build();
+
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

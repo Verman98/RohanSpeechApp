@@ -28,8 +28,8 @@ var removeConfetti; //call to stop the confetti animation and remove all confett
 	}
 
 	function startConfettiInner() {
-		var width = window.innerWidth;
-		var height = window.innerHeight;
+		var width = window.innerWidth /1.1;
+		var height = window.innerHeight/2.25;
 		window.requestAnimFrame = (function() {
 			return window.requestAnimationFrame ||
 				window.webkitRequestAnimationFrame ||

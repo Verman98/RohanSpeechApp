@@ -20,7 +20,7 @@
         <div style="display: grid;">
             <canvas id="canvas" class="visualizer" height="100" width="500" style="grid-area: 1/1;"></canvas>
 
-            <MudIcon Icon="@Icons.Material.Filled.KeyboardVoice" Style="height:100px; margin-left: 200px; width:100px;grid-area: 1/1;"></MudIcon>
+            <MudIcon id="microphone" Icon="@Icons.Material.Filled.KeyboardVoice" Style="height:100px; margin-left:200px;width:100px;grid-area: 1/1;"></MudIcon>
         </div>
 
         <MudSpacer></MudSpacer>
@@ -38,10 +38,16 @@
 
     <MudToolBar Class="mt-5">
 
+        <img id="img" height="500" width="300" style="visibility:hidden;" />
+
         <MudSpacer></MudSpacer>
 
         <StartStopRecordingBar RecordingStartedStopped=@RecordingStartedStoppedAsync></StartStopRecordingBar>
+        
         <MudSpacer></MudSpacer>
+
+        <img id="img2" height="500" width="300" style="visibility:hidden;" />
+
     </MudToolBar>
     
 </div>
@@ -100,7 +106,7 @@
         snackbar.Add("You leveled up! Great! Keep going", Severity.Success);
 
         await jsRuntime.InvokeVoidAsync("startAchievmentAnimation");
-        await Task.Delay(2000);
+        await Task.Delay(4000);
         await jsRuntime.InvokeVoidAsync("stopAchievmentAnimation");
 
         snackbar.Clear();

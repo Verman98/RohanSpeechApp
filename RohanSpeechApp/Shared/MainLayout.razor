@@ -1,6 +1,9 @@
 ﻿@using MudBlazor
+@using RohanSpeechApp.Interfaces;
 @using RohanSpeechApp.RazorClassLibrary
 @inherits LayoutComponentBase
+
+@inject IAuthenticationService authService
 
 <PageTitle>RohanSpeechApp</PageTitle>
 
@@ -25,7 +28,7 @@
         } else
         {
             <MudMainContent Class="mt-16 pa-5">
-                <AuthComponent Authenticated=@Authenticated AuthPIN="1234"></AuthComponent>
+                <AuthComponent Authenticated=@AuthenticateAndSave AuthPIN=@AuthPIN></AuthComponent>
             </MudMainContent>
         }
 
@@ -38,10 +41,35 @@
     private MudTheme _theme = new();
 
     private bool authorized = false;
+    private string AuthPIN = "xxxx";
 
-    private void Authenticated()
+    protected override async Task OnInitializedAsync()
+    {
+        AuthPIN = authService.AuthPIN;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var savedPin = await authService.GetSavedAuthAsync();
+
+            if (savedPin == AuthPIN) await Authenticate();  
+        }
+
+    }
+
+    private async Task Authenticate()
     {
         authorized = true;
-        StateHasChanged();
+
+        await InvokeAsync(() => this.StateHasChanged());
+    }
+
+    private async Task AuthenticateAndSave()
+    {
+        await authService.SaveAuthAsync(AuthPIN);
+
+        await Authenticate();
     }
 }

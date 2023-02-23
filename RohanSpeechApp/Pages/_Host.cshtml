@@ -147,6 +147,7 @@
         function startRecording(text) {
             filename = text;
             stopDrawing = false;
+            document.getElementById("microphone").style.visibility = "hidden";
 
             navigator.getUserMedia({ audio: true }, onSuccess, onError);
         }
@@ -155,6 +156,7 @@
             //stop.click();
             recorder.stop();
             stopDrawing = true;
+            document.getElementById("microphone").style.visibility = "visible";
 
             recorder.exportWAV(function (s) {
                 //let filename = new Date().toISOString().replaceAll(':', "");
@@ -182,32 +184,6 @@
             console.log(evt.status);
         }
 
-        //window.MyJSMethods = {
-
-        //    startRecording: function () {
-        //        navigator.getUserMedia({ audio: true }, onSuccess, onError);
-        //    },
-
-        //    stopRecording: function (element) {
-        //        //stop.click();
-        //        recorder.stop();
-
-        //        recorder.exportWAV(function (s) {
-        //            wav = window.URL.createObjectURL(s);
-        //            audio.src = window.URL.createObjectURL(s);
-        //            let filename = new Date().toISOString().replaceAll(':', "");
-        //            let fd = new FormData();
-        //            fd.append("file", s, filename);
-        //            let xhr = new XMLHttpRequest();
-        //            xhr.addEventListener("load", transferComplete);
-        //            xhr.addEventListener("error", transferFailed)
-        //            xhr.addEventListener("abort", transferFailed)
-        //            xhr.open("POST", "api/SaveAudio/Save/", true);
-        //            xhr.send(fd);
-        //    },
-
-
-        //};
 
 
         let onError = function (err) {
@@ -218,9 +194,6 @@
         let stop = document.querySelector('.stop');
 
         let onSuccess = function (stream) {
-            //let recorder;
-            //let context;
-            //let audio = document.querySelector('audio');
 
             context = new AudioContext();
             let mediaStreamSource = context.createMediaStreamSource(stream);
@@ -233,17 +206,62 @@
             visualize(stream, canvas, canvasCtx);
         }
 
-
+        
+        //Confetti animation
         function startAchievmentAnimation(){
 
             startConfetti();
+            showGif();
         }
 
         function stopAchievmentAnimation(){
             stopConfetti();
             removeConfetti();
+            stopGif();
         }
 
+        function showGif(){
+            document.getElementById("img").style.visibility = "visible";
+            document.getElementById("img").src = "dance.gif";
+
+            document.getElementById("img2").style.visibility = "visible";
+            document.getElementById("img2").src = "dance.gif";
+        }
+
+        function stopGif() {
+            document.getElementById("img").style.visibility = "hidden"; 
+            document.getElementById("img2").style.visibility = "hidden";
+
+        }
+
+        //Cookies
+        function addCookie(key, value)
+        {
+            var date = new Date();
+            date.setTime(date.getTime() + (365*24*60*60*1000));
+            document.cookie = `${key}=${value}; exipres=${date.toGMTString()}; path=/`;
+        }
+
+        function getCookie(cname)
+        {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            
+            for(var i = 0; i < ca.length; i++)
+            {
+                var c = ca[i];
+                while (c.charAt(0) == ' '){
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0){
+                    return c.substring(name.length, c.length);
+                }
+            }
+
+            return "";
+
+        }
 
     </script>
 
