@@ -13,6 +13,7 @@
 
 <div class="mt-10">
 
+
     <MudToolBar >
 
         <MudSpacer></MudSpacer>
@@ -26,11 +27,12 @@
         <MudSpacer></MudSpacer>
     </MudToolBar>
 
+
     <MudToolBar Class="mt-5">
 
         <MudSpacer></MudSpacer>
 
-        <MudTextField @bind-Value=@TextValue Variant="Variant.Outlined" ReadOnly="true"></MudTextField>
+        <MudTextField Label="Record following text:" @bind-Value=@TextValue Variant="Variant.Outlined" ReadOnly="true"></MudTextField>
 
         <MudSpacer></MudSpacer>
     </MudToolBar>
@@ -76,22 +78,37 @@
     {
         if (started)
         {
-            await Record();
+            try
+            {
+                await Record();
+
+            } catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
 
         } else
         {
-            await Stop();
+            try
+            {
+                await Stop();
 
-            TextValue = speechSamplesProvider.GetRandomSample();
+                TextValue = speechSamplesProvider.GetRandomSample();
 
-            await gameService.AddXP();
+                await gameService.AddXP();
+
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
         }
     }
 
 
     private async Task Record()
     {
-        await jsRuntime.InvokeVoidAsync("startRecording", TextValue);
+        await jsRuntime.InvokeVoidAsync("startRecordingAsync", TextValue);
     }
 
     private async Task Stop()

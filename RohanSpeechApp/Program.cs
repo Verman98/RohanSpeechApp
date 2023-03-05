@@ -7,6 +7,9 @@ using MudBlazor.Services;
 using RohanSpeechApp.Interfaces;
 using RohanSpeechApp.Services;
 
+string currentDate = "28.02.2023 19:28";
+Console.WriteLine(currentDate);
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -43,7 +46,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 

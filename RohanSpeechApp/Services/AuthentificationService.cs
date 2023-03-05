@@ -17,14 +17,33 @@ namespace RohanSpeechApp.Services
 
         public async Task<string> GetSavedAuthAsync()
         {
-            string savedPin = await _jsRuntime.InvokeAsync<string>("getCookie", PINCOOKIEKEY);
+            string savedPin = "xxxx";
+            
+            try
+            {
+                savedPin = await _jsRuntime.InvokeAsync<string>("getCookie", PINCOOKIEKEY);
+
+            } catch(Exception ex)
+            {
+
+                Console.WriteLine(ex.ToString());
+
+            }
 
             return savedPin;
         }
 
         public async Task SaveAuthAsync(string pin)
         {
-            await _jsRuntime.InvokeVoidAsync("addCookie", PINCOOKIEKEY, pin);
+            try
+            {
+
+                await _jsRuntime.InvokeVoidAsync("addCookie", PINCOOKIEKEY, pin);
+
+            } catch( Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
     }
 }

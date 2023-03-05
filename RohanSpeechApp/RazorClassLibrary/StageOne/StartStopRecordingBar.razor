@@ -4,20 +4,18 @@
 @if (started)
 {
 
-    <MudIconButton Class="mud-width-full rounded" Style="height:300px;width:500px;margin-top: 350px;" Color="Color.Error" Variant="Variant.Filled"
-                    Icon="@Icons.Material.Filled.Stop" Size="Size.Large" OnClick=@StartStopBtnClicked>
-
-    </MudIconButton>
+    <MudButton Class="mud-width-full rounded" Style="height:450px;width:450px;margin-top: 450px;" Color="Color.Error" Variant="Variant.Filled"
+                    StartIcon="@Icons.Material.Filled.Stop" IconSize="Size.Large" OnClick=@StartStopBtnClicked>
+                Stop recording
+    </MudButton>
 
 } else
 {
 
-    <MudIconButton Class="mud-width-full rounded" Style="height:300px;width:500px;margin-top: 350px;" Color="Color.Success" Variant="Variant.Filled"
-               Icon="@Icons.Material.Filled.PlayArrow" Size="Size.Large" OnClick=@StartStopBtnClicked
-              
-                >
-
-    </MudIconButton>
+    <MudButton Class="mud-width-full rounded" Style="height:450px;width:450px;margin-top: 450px;" Color="Color.Success" Variant="Variant.Filled"
+           StartIcon="@Icons.Material.Filled.PlayArrow" IconSize="Size.Large" OnClick=@StartStopBtnClicked>
+                Start recording
+    </MudButton>
 
 }
 

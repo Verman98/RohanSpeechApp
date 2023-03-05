@@ -35,6 +35,7 @@
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
 
     <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 
     <script src="confetti.js"></script>
 
@@ -144,17 +145,45 @@
 
         
 
-        function startRecording(text) {
+        //function startRecording(text) {
+        //    filename = text;
+        //    stopDrawing = false;
+        //    document.getElementById("microphone").style.visibility = "hidden";
+            
+        //    navigator.getUserMedia({ audio: true }, onSuccess, onError);
+        //}
+
+        async function startRecordingAsync(text) {
+            console.error("start recording async");
+
             filename = text;
             stopDrawing = false;
             document.getElementById("microphone").style.visibility = "hidden";
 
-            navigator.getUserMedia({ audio: true }, onSuccess, onError);
+            try {
+                console.error(navigator);
+                console.error(navigator.mediaDevices);
+
+
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                const context = new AudioContext();
+                const mediaStreamSource = context.createMediaStreamSource(stream);
+                console.error(recorder);
+                recorder = new Recorder(mediaStreamSource);
+                recorder.record();
+
+                const canvas = document.querySelector('.visualizer');
+                const canvasCtx = canvas.getContext("2d");
+                visualize(stream, canvas, canvasCtx);
+            } catch (e) {
+                console.error('Failed to get user mediaaa', e);
+            }
         }
 
         function stopRecording(element) {
             //stop.click();
             recorder.stop();
+
             stopDrawing = true;
             document.getElementById("microphone").style.visibility = "visible";
 

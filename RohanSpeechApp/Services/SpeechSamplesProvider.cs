@@ -56,6 +56,13 @@ namespace RohanSpeechApp.Services
             Random rnd = new Random();
             int num = rnd.Next(samples.Count);
 
+            Console.WriteLine(samples.Count());
+
+            if(num < 0 || num > (samples.Count-1))
+            {
+                Console.WriteLine("Index number out of range");
+            }
+
             return samples[num];
         }
 
