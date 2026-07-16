@@ -1,0 +1,149 @@
+{
+  "patterns": [
+    {
+      "spoken": "pleasant",
+      "intended": "present",
+      "pattern_type": "substitution",
+      "notes": "from present in them.wav; The initial consonant cluster 'pr' is pronounced more like 'pl', possibly due to difficulty coordinating the 'r' sound after 'p'."
+    },
+    {
+      "spoken": "lee",
+      "intended": "re",
+      "pattern_type": "initial consonant substitution",
+      "notes": "from Recall the law of conservation of mass.wav; The 'r' sound is substituted with an 'l' sound."
+    },
+    {
+      "spoken": "de",
+      "intended": "the",
+      "pattern_type": "initial consonant deletion",
+      "notes": "from Recall the law of conservation of mass.wav; The 'th' sound in 'the' is simplified to a 'd' sound."
+    },
+    {
+      "spoken": "dat",
+      "intended": "that",
+      "pattern_type": "substitution",
+      "notes": "from that you studied in class.wav; The 'th' sound is replaced with a 'd' sound"
+    },
+    {
+      "spoken": "ti",
+      "intended": "you",
+      "pattern_type": "substitution",
+      "notes": "from that you studied in class.wav; The 'y' sound is replaced with a 't' sound"
+    },
+    {
+      "spoken": "clat",
+      "intended": "class",
+      "pattern_type": "final consonant substitution",
+      "notes": "from that you studied in class.wav; The final 's' sound is replaced with a 't' sound"
+    },
+    {
+      "spoken": "much",
+      "intended": "mass",
+      "pattern_type": "consonant substitution",
+      "notes": "from Mass can neither be created.wav; The initial 'm' sound is correct, but the 's' sound is being replaced by 'ch'. This may indicate difficulty producing the 's' sound in certain positions."
+    },
+    {
+      "spoken": "to",
+      "intended": "to",
+      "pattern_type": "accurate pronunciation",
+      "notes": "from To raise extra revenue.wav; The word 'to' was pronounced as intended."
+    },
+    {
+      "spoken": "leth",
+      "intended": "raise",
+      "pattern_type": "consonant substitution and vowel distortion",
+      "notes": "from To raise extra revenue.wav; The 'r' sound was substituted with a 'l' sound and the vowel sounds were shortened."
+    },
+    {
+      "spoken": "extra",
+      "intended": "extra",
+      "pattern_type": "accurate pronunciation",
+      "notes": "from To raise extra revenue.wav; The word 'extra' was pronounced clearly."
+    },
+    {
+      "spoken": "leavening",
+      "intended": "revenue",
+      "pattern_type": "consonant substitution and vowel distortion",
+      "notes": "from To raise extra revenue.wav; 'v' sound was substituted by 'l' sound and the final vowels were distorted, altering the overall meaning."
+    },
+    {
+      "spoken": "in the",
+      "intended": "in the",
+      "pattern_type": "accurate",
+      "notes": "from present in the reactions.wav; This section is spoken as intended."
+    },
+    {
+      "spoken": "reactance",
+      "intended": "reactions",
+      "pattern_type": "substitution",
+      "notes": "from present in the reactions.wav; The final consonant 's' was substituted with a 'ce' sound, indicating a final consonant substitution."
+    },
+    {
+      "spoken": "ah-sid",
+      "intended": "acid",
+      "pattern_type": "consonant substitution",
+      "notes": "from of food are due to acid and bases.wav; The 'c' sound in 'acid' is pronounced more like an 's' sound."
+    },
+    {
+      "spoken": "bay-sis",
+      "intended": "bases",
+      "pattern_type": "vowel substitution",
+      "notes": "from of food are due to acid and bases.wav; The 'e' vowel in 'bases' is pronounced more like an 'ay' sound."
+    },
+    {
+      "spoken": "and",
+      "intended": "And",
+      "pattern_type": "initial consonant devoicing",
+      "notes": "from And by increasing taxes.wav; The initial voiced consonant 'd' in 'And' may sound more like a voiceless 't'."
+    },
+    {
+      "spoken": "cweethen",
+      "intended": "increasing",
+      "pattern_type": "cluster reduction and vowel distortion",
+      "notes": "from And by increasing taxes.wav; The consonant cluster 'kr' in 'increasing' is reduced or simplified, and the vowel 'in' is distorted to 'cwee'."
+    },
+    {
+      "spoken": "thakthet",
+      "intended": "taxes",
+      "pattern_type": "consonant substitution and syllable distortion",
+      "notes": "from And by increasing taxes.wav; The 's' sound in 'taxes' may be substituted with a 'th' sound, and the ending syllable is distorted."
+    },
+    {
+      "spoken": "react-son",
+      "intended": "reaction",
+      "pattern_type": "final consonant addition",
+      "notes": "from in a chemical reaction.wav; The speaker adds a slight 's' sound before the final 'n', altering the intended pronunciation of 'reaction'."
+    },
+    {
+      "spoken": "d\u00e6t\u031as \u0259 f\u00e6kt",
+      "intended": "r\u026a\u02c8sp\u025bkt\u026avli",
+      "pattern_type": "phoneme substitution and syllable structure changes",
+      "notes": "from Respectively.wav; The speaker substituted initial 'r' with 'd' and omitted the '-li' ending syllable. The middle consonant clusters and vowel combinations were also replaced with simpler sounds."
+    },
+    {
+      "spoken": "wit\u0283",
+      "intended": "which",
+      "pattern_type": "consonant cluster reduction",
+      "notes": "from Which of the following would you suggest.wav; The initial 'wh' cluster is reduced to 'w', dropping the 'h' sound."
+    },
+    {
+      "spoken": "\u0259",
+      "intended": "of the",
+      "pattern_type": "reduction of function words",
+      "notes": "from Which of the following would you suggest.wav; 'of the' is reduced to a short schwa sound, common in fast, less clear speech."
+    },
+    {
+      "spoken": "lo\u035eo",
+      "intended": "so",
+      "pattern_type": "initial consonant substitution",
+      "notes": "from Solution.wav; The initial 's' sound was substituted with an 'l' sound."
+    },
+    {
+      "spoken": "t\u0259n",
+      "intended": "\u0283\u0259n",
+      "pattern_type": "consonant substitution",
+      "notes": "from Solution.wav; The 'sh' sound in the final syllable was replaced with a 't' sound."
+    }
+  ],
+  "speaker_notes": ""
+}

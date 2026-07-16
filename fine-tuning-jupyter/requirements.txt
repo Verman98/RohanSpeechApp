@@ -1,0 +1,22 @@
+openai>=1.0
+assemblyai
+deepgram-sdk>=3.0
+google-cloud-speech
+google-genai
+faster-whisper
+jiwer>=3.0.0
+sentence-transformers
+python-dotenv
+matplotlib
+pandas
+
+# Fine-tuning dependencies (used by finetune_whisper.ipynb)
+transformers>=4.40.0
+datasets
+peft
+evaluate
+accelerate
+audiomentations
+librosa
+soundfile
+torchaudio
